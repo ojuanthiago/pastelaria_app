@@ -1,12 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Rota de Funcionário Web App</h1>
-    <h1>Uso de render_template</h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Funcionários{% endblock %}
+
+{% block content %}
+<br>
+<form class="container" action="{{ url_for('funcionario.formFuncionario') }}" method="POST">
+    <div class="row">
+        <div class="col-6 text-start">
+            <h1>Funcionários</h1>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-warning fa-plus mb-3" href="{{ url_for('funcionario.formFuncionario') }}" type="submit" name="formNovo">  Novo Funcionário</button>
+        </div>
+    </div>
+</form>
+<br>
+<div class="container text-center">
+    <div class="row">
+        <table class="table table-sm table-light align-items-start">
+            <thead>
+                <tr>
+                    <th class="col-1">#</th>
+                    <th class="col-3">Nome</th>
+                    <th class="col-2">Matricula</th>
+                    <th class="col-2">CPF</th>
+                    <th class="col-2">Telefone</th>
+                    <th class="col-1">Grupo</th>
+                    <th class="col-1">Senha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if result %}
+                {% for row in result %} 
+                <tr>
+                    <th scope="row"> {{ row['id_funcionario'] }}</th>
+                    <td> {{ row['nome'] }}</td>
+                    <td> {{ row['matricula'] }}</td>
+                    <td> {{ row['cpf'] }}</td>
+                    <td> {{ row['telefone'] }}</td>
+                    <td> {{ row['grupo'] }}</td>
+                    <td type="password"> {{ row['senha'] }}</td>
+                    <td><i class="fas fa-edit"></i></td>
+                    <td><i class="fas fa-trash"></i></td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

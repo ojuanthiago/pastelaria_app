@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Pastelaria do Zé</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-6.4.2-web/css/all.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('node_modules', filename='sweetalert2/sweetalert2.min.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        {% block menu %}
+        <div class="logo">
+        </div>
+        <div class="container">
+            <div class="title">
+                <h1>Pastelaria do Zé</h1>
+            </div>
+        </div>
+        <div class="container menu">
+            <div class="row">
+                <div class="logo">
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <a class="navbar-brand button" href="{{ url_for('index.formIndex') }}">Início</a>
+                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                <div class="navbar-nav">
+                                    <div class="nav-link dropdown">
+                                        <button class="dropdown-toggle button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Clientes
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{ url_for('cliente.formCliente') }}">Cadastrar cliente</a></li>
+                                            <li><a class="dropdown-item" href="{{ url_for('cliente.formListaCliente') }}">Lista clientes</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="nav-link dropdown">
+                                        <button class="dropdown-toggle button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Produtos
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{ url_for('produto.formProduto') }}">Cadastrar produto</a></li>
+                                            <li><a class="dropdown-item" href="{{ url_for('produto.formListaProduto') }}">Lista produtos</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="nav-link dropdown">
+                                        <button class="dropdown-toggle button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Funcionários
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{ url_for('funcionario.formFuncionario') }}">Cadastrar funcionário</a></li>
+                                            <li><a class="dropdown-item" href="{{ url_for('funcionario.formListaFuncionario') }}">Lista funcionários</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+        
+        {% block js %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="{{ url_for('node_modules', filename='jquery-3.7.1.js') }}"></script>
+        <script src="{{ url_for('node_modules', filename='jquery.maskedinput.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='fontawesome-free-6.4.2-web/js/all.js') }}"></script>
+        <script src="{{ url_for('node_modules', filename='sweetalert2/sweetalert2.all.min.js') }}"></script>
+        <script>
+            Swal.fire({
+            title: 'Teste!',
+            text: 'sweetalert2 funcionando!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+            });
+        </script>
+        <!-- redirect - request.args.get('msg' ou 'msgErro') -->
+        {% if request.args.get('msg'): %}
+        <script>
+        Swal.fire("Sucesso", "{{ request.args.get('msg') }}", "success");
+        </script>
+        {% elif request.args.get('msgErro'): %}
+        <script>
+        Swal.fire("Erro", "{{ request.args.get('msgErro') }}", "error");
+        </script>
+        <!-- render_template - msg ou msgErro -->
+        {% elif msg: %}
+        <script>
+        Swal.fire("ID {{ msg.id }}, {{ msg.msg }} ", "{{ msg }}", "success");
+        </script>
+        {% elif msgErro: %}
+        <script>
+        Swal.fire("{{ msgErro.msg if msgErro.msg else 'Erro' }}", "{{ msgErro }}", "error");
+        </script>
+        {% endif %}
+        {% endblock %}
+    </body>
+</html>

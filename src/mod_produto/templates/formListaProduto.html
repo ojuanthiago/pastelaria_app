@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Produto{% endblock %}
+
+{% block content %}
+<br>
+<form class="container" action="{{ url_for('produto.formProduto') }}" method="POST">
+    <div class="row">
+        <div class="col-6 text-start">
+            <h1>Produtos</h1>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-warning fa-plus mb-3" href="{{ url_for('produto.formProduto') }}" type="submit" name="formNovo">  Novo Produto</button>
+        </div>
+    </div>
+</form>
+<br>
+<div class="container text-center">
+    <div class="row">
+        <table class="table table-sm table-light align-items-start">
+            <thead>
+                <tr>
+                    <th class="col-1">Código</th>
+                    <th class="col-3">Nome</th>
+                    <th class="col-2">Valor</th>
+                    <th class="col-3">Descrição</th>
+                    <th class="col-3">Imagem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if result %}
+                {% for row in result %} 
+                <tr>
+                    <th scope="row"> {{ row['id_produto'] }}</th>
+                    <td> {{ row['nome'] }}</td>
+                    <td> {{ row['valor_unitario'] }}</td>
+                    <td> {{ row['descricao'] }}</td>
+                    <td> {{ row['foto'] }}</td>
+                    <td><i class="fas fa-edit"></i></td>
+                    <td><i class="fas fa-trash"></i></td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
