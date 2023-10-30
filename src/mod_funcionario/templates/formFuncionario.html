@@ -1,8 +1,6 @@
 {% extends "base.html" %}
-
 {% block title %}Funcionário{% endblock %}
-
-{% block content %}{% endblock %}
+{% block content %}
 <form name="formAdicionar" id="formAdicionar" action="" method="POST">
     <h1>Funcionário</h1>
     <input type="text" name="id" id="id" value="" placeholder="Código" readonly>
@@ -35,3 +33,4 @@
     <br>
     <button type='submit' name='salvaUsuarioDB' id='salvaUsuarioDB'><i class='fas fa-save'></i> Salvar</button>
 </form>
+{% endblock %}

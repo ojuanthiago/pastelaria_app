@@ -3,22 +3,36 @@
 {% block content %}
 <form name="formAdicionar" action="{{ url_for('produto.insert') }}" method="POST" enctype="multipart/form-data">
     <h1>Produto</h1>
-
-    <input type="text" name="id" id="id" value="" placeholder="ID" readonly>
-    <label for="id_produto">Código:</label>
-
-    <input type="text" name="nome" id="nome" value="" placeholder="Nome do Produto" autofocus required>
-    <label for="nome">Nome do Produto :</label>
-
-    <input type="number" name="valor_unitario" id="valor_unitario" value="" required>
-    <label for="valor_unitario">Valor:</label>
-
-    <textarea name="descricao" id="descricao" placeholder="Descrição do Produto" required></textarea>
-    <label for="descricao">Descrição do Produto :</label>
-
-    <label for="foto">Imagem:</label>
-    <input type="file" name="foto" accept="image/*" id="foto">
-    
-    <button type='submit' name='salvaProdutoDB' id='salvaProdutoDB'><i class='fas fa-save'></i> Salvar</button>
+    <div class="container">
+        <br>
+        <div class="row">
+            <label for="id_produto">Código:</label>
+            <input type="text" name="id" id="id" value="" placeholder="ID" readonly>
+        </div>
+        <br>
+        <div class="row">
+            <label for="nome">Nome do Produto :</label>
+            <input type="text" name="nome" id="nome" value="" placeholder="Nome do Produto" autofocus required>
+        </div>    
+        <br>
+        <div class="row">
+            <label for="valor_unitario">Valor:</label>
+            <input type="number" name="valor_unitario" id="valor_unitario" value="" required>
+        </div>        
+        <br>
+        <div class="row">
+            <label for="descricao">Descrição do Produto :</label>
+            <textarea name="descricao" id="descricao" placeholder="Descrição do Produto" required></textarea>
+        </div>            
+        <br>
+        <div class="row">
+            <label for="foto">Imagem:</label>
+            <input type="file" name="foto" accept="image/*" id="foto">
+        </div>            
+        <br>
+        <div class="row">
+            <button type='submit' name='salvaProdutoDB' id='salvaProdutoDB'><i class='fas fa-save'></i> Salvar</button>
+        </div>            
+    </div>                
 </form>
 {% endblock %}
