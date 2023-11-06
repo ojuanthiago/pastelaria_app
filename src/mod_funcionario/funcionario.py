@@ -17,7 +17,7 @@ def formListaFuncionario():
     except Exception as e:
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
 
-@bp_funcionario.route('/form-funcionario/', methods=['POST'])
+@bp_funcionario.route('/form-funcionario/', methods=['POST', 'GET'])
 def formFuncionario():
     return render_template('formFuncionario.html')
 
