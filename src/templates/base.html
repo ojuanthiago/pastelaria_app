@@ -84,25 +84,6 @@
         <script src="{{ url_for('static', filename='jquery.maskedinput.min.js') }}"></script>
         <script src="{{ url_for('static', filename='fontawesome-free-6.4.2-web/js/all.js') }}"></script>
         <script src="{{ url_for('static', filename='sweetalert2/sweetalert2.all.min.js') }}"></script>
-        <!-- redirect - request.args.get('msg' ou 'msgErro') -->
-        {% if request.args.get('msg'): %}
-        <script>
-        Swal.fire("Sucesso", "{{ request.args.get('msg') }}", "success");
-        </script>
-        {% elif request.args.get('msgErro'): %}
-        <script>
-        Swal.fire("Erro", "{{ request.args.get('msgErro') }}", "error");
-        </script>
-        <!-- render_template - msg ou msgErro -->
-        {% elif msg: %}
-        <script>
-        Swal.fire("ID {{ msg.id }}, {{ msg.msg }} ", "{{ msg }}", "success");
-        </script>
-        {% elif msgErro: %}
-        <script>
-        Swal.fire("{{ msgErro.msg if msgErro.msg else 'Erro' }}", "{{ msgErro }}", "error");
-        </script>
-        {% endif %}
         {% endblock %}
     </body>
 </html>
