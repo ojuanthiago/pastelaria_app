@@ -9,67 +9,62 @@
 {% set foto = result[0].foto if result else '' %}
 
 {% block content %}
+<br>
 <div class="container">
-    <form name="{{ 'formEditar' if result else 'formAdicionar' }}" id="{{ 'formEditar' if result else 'formAdicionar' }}" method="POST" enctype="multipart/form-data">
-        <div class="container">
-            <br>
-            <div class="row">
-                <div class="col-1">
-                    <label for="id_produto">Código:</label>
-                    <input type="text" name="id" id="id" value="{{ id }}" placeholder="ID" readonly>
+    <form name="{{ 'formEditar' if result else 'formAdicionar' }}" id="{{ 'formEditar' if result else 'formAdicionar' }}"
+    action="{{ url_for('produto.edit') if result else url_for('produto.insert') }}" method="POST" enctype="multipart/form-data">
+        <h1>Produto - {{ "%s: %s" % ('Editar Registro', id) if result else 'Novo' }}</h1>
+        <div class="container form-control">
+            <div class="row g-3">
+                <div class=" col-md-2">
+                    <label class="form-label" for="id">Código</label>
+                    <input class="form-control" type="text" name="id" id="id" value="{{ id }}" placeholder="ID" readonly>
                 </div>
-                <div class="col-3">
-                    <label for="nome">Nome do Produto:</label>
-                    <input type="text" name="nome" id="nome" value="{{ nome }}" placeholder="Nome do Produto" autofocus required>
-                </div>    
+                <div class=" col-md-6">
+                    <label class="form-label" for="nome">Nome do Produto</label>
+                    <input class="form-control" type="text" name="nome" id="nome" value="{{ nome }}" placeholder="Nome do Produto" autofocus required>
+                </div>
+                <br> 
             </div>
             <br>
-            <div class="row">
-                <div class="col-4">
-                    <label for="valor_unitario">Valor:</label>
-                    <input type="number" name="valor_unitario" id="valor_unitario" value="{{ valor_unitario }}" required>
-                    <br>
-                    <label for="descricao">Descrição do Produto:</label>
-                    <textarea name="descricao" id="descricao" placeholder="Descrição do Produto" value="{{ descricao }}" required></textarea>
-                </div>            
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label" for="valor_unitario">Valor</label>
+                    <div class="input-group">
+                        <div class="input-group-text">R$</div>
+                        <input class="form-control" type="number" step="0.01" min="0.01" name="valor_unitario" id="valor_unitario" value="{{ valor_unitario }}" required>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label" for="descricao">Descrição</label>
+                    <textarea class="form-control" name="descricao" id="descricao" placeholder="Descrição do Produto" value="{{ descricao }}" required></textarea>                    
+                </div>           
                 <br>
-                <div class="col-6">
-                    <label for="foto">Imagem:</label>
-                    <input type="file" name="foto" accept="image/*" id="foto">
-                </div>            
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <label class="form-label" for="foto">Imagem</label>
+                        <input class="form-control" type="file" name="foto" accept="image/*" id="foto">
+                    </div>
+                </div>
             </div>        
             <br>
             <div class="row">
-                <button type='submit' name='salvaProdutoDB' id='salvaProdutoDB'><i class='fas fa-save'></i> Salvar</button>
+                <div class="col-sm-1">
+                    <button class="btn btn-primary" type='submit' name='salvaProdutoDB' id='salvaProdutoDB'>Salvar</button>
+                    <br>
+                </div>
             </div>            
         </div>                
     </form>
+    <br>
+    <!-- footer -->
 </div>
 {% endblock %}
+
+
 {% block js %}
-
-<!-- redirect - request.args.get('msg' ou 'msgErro') -->
-{% if request.args.get('msg'): %}
 <script>
-    Swal.fire("Sucesso", "{{ request.args.get('msg') }}", "success");
-</script>
-{% elif request.args.get('msgErro'): %}
-<script>
-    Swal.fire("Erro", "{{ request.args.get('msgErro') }}", "error");
-</script>
-<!-- render_template - msg ou msgErro -->
-{% elif msg: %}
-<script>
-    Swal.fire("ID {{ msg.id }}, {{ msg.msg }} ", "{{ msg }}", "success");
-</script>
-{% elif msgErro: %}
-<script>
-    Swal.fire("{{ msgErro.msg if msgErro.msg else 'Erro' }}", "{{ msgErro }}", "error");
-</script>
-{% endif %}
-
-<script>
-    $SCRIPT_ROOT = "{{ request.script_root | tojson | safe }}"; // pega a url da barra de endereço
+    $SCRIPT_ROOT = {{ request.script_root | tojson | safe }}; // pega a url da barra de endereço
     // JS-Ajax para adicionar
     $('#formAdicionar').submit(function (e) {
         e.preventDefault(); // parar o envio para poder fazer manualmente
@@ -85,7 +80,13 @@
             success: function (data) {
                 if (!data.erro) {
                     Swal.fire({
-                        title: '', text: 'ID' + data.msg.id + ', ' + data.msg.msg, icon: 'success', showCancelButton: false, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'OK'
+                        title: '', 
+                        text: 'ID' + data.msg.id + ', ' + data.msg.msg, 
+                        icon: 'success', 
+                        showCancelButton: false, 
+                        confirmButtonColor: '#3085d6', 
+                        cancelButtonColor: '#d33', 
+                        confirmButtonText: 'OK'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             window.location.replace($SCRIPT_ROOT + "{{ url_for('produto.formListaProduto') }}");

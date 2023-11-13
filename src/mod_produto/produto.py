@@ -19,9 +19,25 @@ def formListaProduto():
     except Exception as e:
         return render_template('formListaProduto.html', msgErro=e.args[0])
     
-@bp_produto.route('/form-produto/', methods=['GET', 'POST'])
+@bp_produto.route('/form-produto/', methods=['POST', 'GET'])
 def formProduto():
     return render_template('formProduto.html')
+
+@bp_produto.route("/form-edit-produto", methods=['POST', 'GET'])
+def formEditProduto():
+    try:
+        # ID enviado via FORM
+        id_produto = request.form['id']
+        # executa o verbo GET da API buscando somente o funcionário selecionado,
+        # obtendo o JSON do retorno
+        response = requests.get(ENDPOINT_PRODUTO + id_produto, headers=HEADERS_API)
+        result = response.json()
+        if (response.status_code != 200):
+            raise Exception(result[0])
+            # renderiza o form passando os dados retornados
+        return render_template('formProduto.html', result=result[0])
+    except Exception as e:
+        return render_template('formListaProduto.html', msgErro=e.args[0])
 
 @bp_produto.route('/insert', methods=['POST'])
 def insert():
@@ -74,7 +90,7 @@ def edit():
 def delete():
     try:
         # dados enviados via FORM
-        id_produto = request.form['id']
+        id_produto = request.form['id_produto']
         # executa o verbo DELETE da API e armazena seu retorno
         response = requests.delete(ENDPOINT_PRODUTO + id_produto, headers=HEADERS_API)
         result = response.json()
