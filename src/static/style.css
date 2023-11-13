@@ -1,0 +1,31 @@
+/*  */
+* {
+    font-family: 'Josefin Sans',sans-serif;
+}
+.logo {
+    background: #f7861c;
+    height: 68px;
+}
+.title {
+    margin: 40px 0px 20px 20px;
+}
+.title h2 {
+    font-size: 35px;
+    margin-left: 20px;
+    color: #2d2d2d;    
+}
+.navbar {
+    background-color: #2d2d2d;
+}
+
+.button {
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    border: 2px solid #2d2d2d;
+    border-radius: 10px;
+    background-color: transparent;
+}
+.button:hover {
+    color: #a7a7a7;
+}
