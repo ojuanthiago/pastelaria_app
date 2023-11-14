@@ -26,6 +26,8 @@ DB_HOST = os.getenv("DB_HOST")
 DB_USER = os.getenv("DB_USER")
 DB_PASS = quote(os.getenv("DB_PASS"))
 
+TEMPO_SESSION = os.getenv("TEMPO_SESSION")
+
 # Ajusta STR_DATABASE conforme gerenciador escolhido
 if DB_SGDB == 'sqlite': # SQLite
     STR_DATABASE = f"sqlite:///{DB_NAME}.db"
