@@ -2,9 +2,9 @@
 * {
     font-family: 'Josefin Sans',sans-serif;
 }
-.logo {
+.bar {
     background: #f7861c;
-    height: 68px;
+    height: 5px;
 }
 .title {
     margin: 40px 0px 20px 20px;
@@ -17,15 +17,43 @@
 .navbar {
     background-color: #2d2d2d;
 }
-
-.button {
-    font-size: 20px;
+.navbar .button {
+    align-items: center;
     color: white;
     text-decoration: none;
-    border: 2px solid #2d2d2d;
-    border-radius: 10px;
     background-color: transparent;
+    font-weight: bold;
+}
+
+.dropdown-item:hover {
+    background-color: #f7861c;
+}
+
+.button {
+    align-items: center;
+    background-color: #f7861c;
+    color: white;
+    text-decoration: none;
+    border: 2px solid transparent;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 30px;
+    /* transition: transform .4s; */
 }
 .button:hover {
-    color: #a7a7a7;
+    /* transform: scale(1.2);
+    transition: .4s; */
+    color: #f7861c;
+    background-color: transparent;
+    border: 2px solid #f7861c;
+}
+.foot {
+    align-items: center;
+    background: #2d2d2d;
+    color: white;
+    height: 68px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }

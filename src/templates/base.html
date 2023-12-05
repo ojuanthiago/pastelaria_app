@@ -14,7 +14,7 @@
     </head>
     <body>
         {% block menu %}
-        <div class="logo">
+        <div class="bar">
         </div>
         <div class="container">
             <div class="title">
@@ -23,7 +23,7 @@
         </div>
         <div class="container menu">
             <div class="row">
-                <div class="logo">
+                <div class="">
                     <nav class="navbar navbar-expand-lg">
                         <div class="container-fluid">
                             <a class="navbar-brand button" href="{{ url_for('index.formIndex') }}">Início</a>
@@ -60,6 +60,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <a class="navbar-brand button fas fa-door-open text-end" href="{{ url_for('login.logoff') }}">SAIR</a> 
                         </div>
                     </nav>
                 </div>
@@ -69,19 +70,29 @@
         {% endblock %}
 
         {% block content %}{% endblock %}
+        {% block footer %}
+        <footer class="foot">
+            <div class="">
+                <a class="d-flex justify-content-center mt-5" href="{{ url_for('index.formIndex') }}">&copy; 2023 by Pastelaria Do Zé</a>
+                <br>
+                <br>            
+            </div>
+        </footer>
+        {% endblock %}
+
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="{{ url_for('static', filename='jquery/dist/jquery.js') }}"></script>
         <script src="{{ url_for('static', filename='jquery-maskedinput/dist/jquery.maskedinput.min.js') }}"></script>
         <script src="{{ url_for('static', filename='fontawesome-free-6.4.2-web/js/all.js') }}"></script>
         <script src="{{ url_for('static', filename='sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+
         {% block js %}
-        {% endblock %}
         <!-- redirect - request.args.get('msg' ou 'msgErro') -->
         {% if request.args.get('msg'): %}
         <script>
             Swal.fire("Sucesso", "{{ request.args.get('msg') }}", "success");
-        </script>
+            </script>
         {% elif request.args.get('msgErro'): %}
         <script>
             Swal.fire("Erro", "{{ request.args.get('msgErro') }}", "error");
@@ -90,12 +101,13 @@
         {% elif msg: %}
         <script>
             Swal.fire("ID {{ msg.id }}, {{ msg.msg }} ", "{{ msg }}", "success");
-        </script>
+            </script>
         {% elif msgErro: %}
         <script>
             Swal.fire("{{ msgErro.msg if msgErro.msg else 'Erro' }}", "{{ msgErro }}", "error");
-        </script>
+            </script>
         {% endif %}
-
+        {% endblock %}
+        
     </body>
 </html>

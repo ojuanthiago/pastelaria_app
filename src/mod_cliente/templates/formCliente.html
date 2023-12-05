@@ -14,15 +14,14 @@
 {% block content %}
 <br>
 <div class="container">
-    <form name="{{ 'formEditar' if result else 'formAdicionar' }}" id="{{ 'formEditar' if result else 'formAdicionar' }}" 
-    action="{{ url_for('cliente.edit') if result else url_for('cliente.insert') }}" 
-    method="POST"  enctype="multipart/form-data">
+    <form name="{{ 'formEditar' if result else 'formAdicionar' }}" id="{{ 'formEditar' if result else 'formAdicionar' }}"
+    action="{{ url_for('cliente.edit') if result else url_for('cliente.insert') }}" method="POST" enctype="multipart/form-data">
         <h1>Cliente - {{ "%s: %s" % ('Editar Registro', id) if result else 'Novo' }}</h1>
         <div class="container form-control">
             <div class="row g-3">
                 <div class=" col-md-2">
                     <label class="form-label" for="id">Código</label>
-                    <input class="form-control" type="text" name="id" id="id_cliente" value="{{ id }}" placeholder="ID" readonly>
+                    <input class="form-control" type="text" name="id" id="id" value="{{ id }}" placeholder="ID" readonly>
                 </div>
                 <div class=" col-md-6">
                     <label class="form-label" for="nome">Nome do Cliente</label>
@@ -83,6 +82,8 @@
     <!-- footer -->
 </div>    
 {% endblock %}
+
+
 {% block js %}
 <script>
     $SCRIPT_ROOT = {{ request.script_root | tojson | safe }}; // pega a url da barra de endereço
@@ -101,7 +102,8 @@
             success: function (data) {
                 if (!data.erro) {
                     Swal.fire({
-                        title: '', text: 'ID' + data.msg.id + ', ' + data.msg.msg, 
+                        title: '', 
+                        text: 'ID' + data.msg.id + ', ' + data.msg.msg, 
                         icon: 'success', 
                         showCancelButton: false, 
                         confirmButtonColor: '#3085d6', 
@@ -141,7 +143,7 @@
                 if (!data.erro) {
                     Swal.fire({
                         title: '',
-                        text: 'ID', icon: 'success', showCancelButton: false, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'OK'
+                        text: 'ID' + data.msg.id + ', ' + data.msg.msg, icon: 'success', showCancelButton: false, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'OK'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             window.location.replace($SCRIPT_ROOT + "{{ url_for('cliente.formListaCliente') }}");

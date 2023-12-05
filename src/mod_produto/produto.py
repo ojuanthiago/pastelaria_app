@@ -1,6 +1,7 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 import requests
+from mod_login.login import validaSessao
 from funcoes import Funcoes
 import base64
 
@@ -9,6 +10,7 @@ bp_produto = Blueprint('produto', __name__, url_prefix="/produto", template_fold
 
 ''' rotas dos formulários '''
 @bp_produto.route('/', methods=['GET', 'POST'])
+@validaSessao
 def formListaProduto():
     try:
         response = requests.get(ENDPOINT_PRODUTO, headers=HEADERS_API)
@@ -20,10 +22,12 @@ def formListaProduto():
         return render_template('formListaProduto.html', msgErro=e.args[0])
     
 @bp_produto.route('/form-produto/', methods=['POST', 'GET'])
+@validaSessao
 def formProduto():
     return render_template('formProduto.html')
 
 @bp_produto.route("/form-edit-produto", methods=['POST', 'GET'])
+@validaSessao
 def formEditProduto():
     try:
         # ID enviado via FORM
