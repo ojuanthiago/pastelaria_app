@@ -12,6 +12,7 @@ from mod_login.login import bp_login
 from mod_produto.produto import bp_produto
 
 app = Flask(__name__)
+app.secret_key = os.urandom(12).hex()
 # registro das rotas do blueprint
 app.register_blueprint(bp_erro)
 app.register_blueprint(bp_cliente)
@@ -24,7 +25,6 @@ if __name__ == "__main__":
     """ Inicia o aplicativo WEB Flask """
     app.run(host=HOST, port=PORT, debug=DEBUG)
 
-app.secret_key = os.urandom(12).hex()
 
 
 # ajuste SAMESITE 

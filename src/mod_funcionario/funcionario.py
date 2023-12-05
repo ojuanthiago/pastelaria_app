@@ -8,6 +8,7 @@ bp_funcionario = Blueprint('funcionario', __name__, url_prefix="/funcionario", t
 
 ''' rotas dos formulários '''
 @bp_funcionario.route('/', methods=['GET', 'POST'])
+@validaSessao
 def formListaFuncionario():
     try:
         response = requests.get(ENDPOINT_FUNCIONARIO, headers=HEADERS_API)
@@ -24,13 +25,14 @@ def formFuncionario():
     return render_template('formFuncionario.html')
 
 @bp_funcionario.route("/form-edit-funcionario", methods=['POST'])
+@validaSessao
 def formEditFuncionario():
     try:
         # ID enviado via FORM
-        id_funcionario = request.form['id']
+        cpf = request.form['cpf']
         # executa o verbo GET da API buscando somente o funcionário selecionado,
+        response = requests.get(ENDPOINT_FUNCIONARIO + cpf, headers=HEADERS_API)
         # obtendo o JSON do retorno
-        response = requests.get(ENDPOINT_FUNCIONARIO + id_funcionario, headers=HEADERS_API)
         result = response.json()
         if (response.status_code != 200):
             raise Exception(result[0])
@@ -80,7 +82,7 @@ def edit():
         payload = {'id_funcionario': id_funcionario, 'nome': nome, 'matricula': matricula, 'cpf': cpf, 'telefone': telefone, 'grupo':
         grupo, 'senha': senha}
         # executa o verbo PUT da API e armazena seu retorno
-        response = requests.put(ENDPOINT_FUNCIONARIO + id_funcionario, headers=HEADERS_API, json=payload)
+        response = requests.put(ENDPOINT_FUNCIONARIO + cpf, headers=HEADERS_API, json=payload)
         result = response.json()
         if (response.status_code != 200 or result[1] != 200):
             raise Exception(result[0])
@@ -92,9 +94,9 @@ def edit():
 def delete():
     try:
         # dados enviados via FORM
-        id_funcionario = request.form['id_funcionario']
+        cpf = request.form['cpf']
         # executa o verbo DELETE da API e armazena seu retorno
-        response = requests.delete(ENDPOINT_FUNCIONARIO + id_funcionario, headers=HEADERS_API)
+        response = requests.delete(ENDPOINT_FUNCIONARIO + cpf, headers=HEADERS_API)
         result = response.json()
         if (response.status_code != 200 or result[1] != 200):
             raise Exception(result[0])

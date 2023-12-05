@@ -2,12 +2,17 @@
 
 {% block title %}Início{% endblock %}
 
-{% if 'login' in session %} 
-Bem-vindo <b>{{ session['login'] }}</b> 
-{% endif %} 
 
 
 {% block content %}
+{% if 'login' in session %} 
+<br>
+<br>
+<div class="container">
+    <h3>Bem-vindo <b>{{ session['login'] }}</b></h3>
+    <h4>{{ session['grupo'] }}</h4>
+</div> 
+{% endif %} 
 <br>
 <br>
 <div class="container">

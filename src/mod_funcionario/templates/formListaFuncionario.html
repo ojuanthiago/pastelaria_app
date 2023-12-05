@@ -21,12 +21,14 @@
             <thead>
                 <tr>
                     <th class="col-1">#</th>
-                    <th class="col-3">Nome</th>
-                    <th class="col-2">Matricula</th>
+                    <th class="col-2">Nome</th>
+                    <th class="col-1">Matricula</th>
                     <th class="col-2">CPF</th>
                     <th class="col-2">Telefone</th>
                     <th class="col-1">Grupo</th>
                     <th class="col-1">Senha</th>
+                    <th class="col-1">Excluir</th>
+                    <th class="col-1">Editar</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,13 +44,13 @@
                     <td type="password"> {{ row['senha'] }}</td>
                     <td>
                         <form method='POST' name='jsDelete' id='jsDelete'>
-                            <input type='hidden' name='id_funcionario' value="{{ row['id_funcionario'] }}">
+                            <input type='hidden' name='cpf' value="{{ row['cpf'] }}">
                             <button type='submit' name='formDeleteFuncionario' class='btn'><i class='fas fa-trash'></i></button>
                         </form>
                     </td>
                     <td>
-                        <form action="{{ url_for('funcionario.formEditFuncionario') }}" method="POST" name="formEdit{{ row['id_funcionario'] }}">
-                            <input type="hidden" name="id" value="{{ row['id_funcionario'] }}">
+                        <form action="{{ url_for('funcionario.formEditFuncionario') }}" method="POST" name="formEdit{{ row['cpf'] }}">
+                            <input type="hidden" name="cpf" value="{{ row['cpf'] }}">
                             <button type="submit" name="formEditFuncionario" class='btn'> <i class="fas fa-edit"></i></button>
                         </form>
                     </td>
@@ -81,9 +83,9 @@
     // sempre pega a url da barra de endereço
     $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
     
-    function deletarFuncionario(idFuncionario) {
+    function deletarFuncionario(cpfFuncionario) {
         $.post($SCRIPT_ROOT + "{{ url_for('funcionario.delete') }}", {
-            id_funcionario: idFuncionario
+            cpf: cpfFuncionario
             }, function (data) {
                 if (!data.erro) {
                     Swal.fire({
