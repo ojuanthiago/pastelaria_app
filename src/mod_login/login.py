@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
+import requests
 from funcoes import Funcoes 
 from functools import wraps
+from settings import HEADERS_API, ENDPOINT_LOGIN
+
 
 bp_login = Blueprint('login', __name__, url_prefix='/', template_folder='templates')
 
@@ -8,7 +11,7 @@ bp_login = Blueprint('login', __name__, url_prefix='/', template_folder='templat
 def login(): 
     return render_template("formLogin.html")
 
-@bp_login.route("/logoff", methods=['GET'])
+@bp_login.route("/logoff", methods=['GET', 'POST'])
 def logoff():
     # limpa um valor individual
     session.pop('login', None)
@@ -19,30 +22,32 @@ def logoff():
 
 @bp_login.route('/login', methods=['POST'])
 def validaLogin():
-    try:
-        # dados enviados via FORM
-        cpf = request.form['usuario']
-        senha = Funcoes.cifraSenha(request.form['senha'])
+  try:
 
-        session.clear()
+    cpf = request.form['usuario']
+    grupo = request.form['grupo']
+    senha = Funcoes.cifraSenha(request.form['senha'])
+    
+    session.clear()
 
-        if (cpf == "abc" and senha == Funcoes.cifraSenha('Bolinhas')):
-        # abre a aplicação na tela home
-            session['login'] = cpf
-            return redirect(url_for('index.formIndex'))
-        
-        elif (cpf == "abc" and senha != Funcoes.cifraSenha('Bolinhas')):
-            raise Exception("Falha de Login! Verifique sua senha.")  
-          
-        elif (cpf != "abc" and senha == Funcoes.cifraSenha('Bolinhas')):
-            raise Exception("Falha de Login! Verifique seu nome de usuário.")   
-         
-        else:
-            raise Exception("Falha de Login! Verifique seus dados e tente novamente!")    
-        
-    except Exception as e:
-        # retorna para a tela de login
-        return redirect(url_for('login.login', msgErro=e.args[0]))    
+    payload = {'cpf': cpf, 'senha': senha, 'grupo': grupo}  
+ 
+
+    response = requests.get(ENDPOINT_LOGIN + cpf, headers=HEADERS_API, json=payload)
+    result = response.json()
+
+    if (result):
+      session['login'] = cpf
+      session['grupo'] = grupo
+  
+      return redirect(url_for('index.formIndex'))
+    else:
+      raise Exception("Falha de Login! Verifique seus dados e tente novamente!")
+
+  except Exception as e:
+
+    return redirect(url_for('login.login', msgErro=e.args[0]))
+
 def validaSessao (f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

@@ -60,7 +60,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="navbar-brand button fas fa-door-open text-end" href="{{ url_for('login.logoff') }}">SAIR</a> 
+                            <form action="{{ url_for('login.logoff') }}" method="post">
+                                <a class="navbar-brand button fas fa-door-open text-end" href="{{ url_for('login.logoff') }}">SAIR</a> 
+                            </form>
                         </div>
                     </nav>
                 </div>

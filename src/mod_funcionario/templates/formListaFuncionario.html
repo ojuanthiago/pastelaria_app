@@ -4,16 +4,20 @@
 
 {% block content %}
 <br>
-<form class="container" action="{{ url_for('funcionario.formFuncionario') }}" method="POST">
+<div class="container">
     <div class="row">
-        <div class="col-6 text-start">
-            <h1>Funcionários</h1>
-        </div>
-        <div class="col-6 text-end">
-            <button class="btn btn-warning fa-plus mb-3" href="{{ url_for('funcionario.formFuncionario') }}" type="submit" name="formNovo">  Novo Funcionário</button>
-        </div>
+        <form action="{{ url_for('funcionario.formFuncionario') }}" method="POST">
+            <div class="col-4 text-start">
+                <h1>Funcionários</h1>
+            </div>
+        </form>
+        <form action="{{ url_for('funcionario.pdfTodos') }}" method="POST">
+            <div class="col-12 text-end">
+                <button class="btn btn-warning mb-3" href="{{ url_for('funcionario.pdfTodos') }}" type="submit" value="PDF" formtarget="_blank">  Gerar PDF</button>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 <br>
 <div class="container text-center">
     <div class="row">
