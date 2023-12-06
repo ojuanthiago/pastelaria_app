@@ -27,15 +27,26 @@
                     <br>
                     <div class="row text-start">
                         <div class="col-md-12">
-                            <label class="form-label" for="usuario">Usuário:</label>
-                            <input class="form-control" placeholder="Usuário" name="usuario" type="text" value="abc" required> 
+                            <label class="form-label" for="usuario">CPF do Usuário:</label>
+                            <input class="form-control" placeholder="CPF" name="usuario" id="usuario" type="text" required> 
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row text-start">
+                        <label for="grupo"class="col-sm-2 form-label">Grupo:</label>
+                        <div class="col-sm-5">
+                            <select name="grupo" id="grupo" aria-label="Grupo" class="form-select col-sm-2" >
+                              <option value="Atendente" {{ 'selected' if grupo == 0 else '' }}>Atendente</option>
+                              <option value="Caixa" {{ 'selected' if grupo == 1 else '' }}>Caixa</option>
+                              <option value="Adm" {{ 'selected' if grupo == 2 else '' }}>Adm</option>
+                            </select>
                         </div>
                     </div>
                     <br>
                     <div class="row text-start">
                         <div class="col-md-12">
                             <label class="form-label" for="senha">Senha:</label>
-                            <input class="form-control" placeholder="Senha" name="senha" type="password" value="Bolinhas" required> <br> 
+                            <input class="form-control" placeholder="Senha" name="senha" id="senha" type="password" required> <br> 
                         </div>
                     </div>
                     <br>
